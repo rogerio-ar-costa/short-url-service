@@ -4,26 +4,27 @@ A simple URL shortener service that allows users to shorten long URLs and retrie
 
 ## TODO List
 
-- [ ] Use Redis for local cache
-- [ ] Use Postgres as database
-- [ ] Use Sentry for monitoring
-- [ ] Use Swagger for API documentation
-- [ ] Implement security filters (Brute-force protection, etc.)
-- [ ] Implement Rate Limiting using Redis (Cluster environment support)
-- [ ] Use ShedLock for scheduled jobs (Cleanup old URLs)
-- [ ] Create Docker Compose to start DB and Redis
-- [ ] Create Docker Compose to build the app and start the service
-- [ ] Implement Integration Tests using Testcontainers
-- [ ] Implement Unit Tests
-- [ ] Use Spock + Groovy for testing
-- [ ] Enable Virtual Threads (Project Loom)
+- [x] Use Redis for local cache
+- [x] Use Postgres as database
+- [x] Use Sentry for monitoring
+- [x] Use Swagger for API documentation
+- [x] Implement security filters (Brute-force protection, etc.)
+- [x] Implement Rate Limiting using Redis (Cluster environment support)
+- [x] Use ShedLock for scheduled jobs (Cleanup old URLs)
+- [x] Create Docker Compose to start DB and Redis
+- [x] Implement Integration Tests using Testcontainers
+- [x] Implement Unit Tests
+- [x] Use Spock + Groovy for testing
+- [x] Enable Virtual Threads (Project Loom)
+- [x] Add Flyway for database migrations
 
 ## Future Improvements
-
+- [ ] Create Docker Compose to build the app and start the service
 - [ ] Resilience4j and Circuit Breaker
 - [ ] Spring WebFlux to increase performance
 - [ ] Add performance tests
 - [ ] Monitoring with Grafana
+- [ ] Add gitflow instructions and/or jenkins
 
 ## How to use
 
@@ -31,18 +32,19 @@ A simple URL shortener service that allows users to shorten long URLs and retrie
 
 - Docker
 - Docker Compose
-- Java 21+ (Required for Virtual Threads/Project Loom)
+- Java 25 (Required for Virtual Threads/Project Loom)
 
 ### Running the application
 
 1.  **Start dependencies (DB and Redis):**
     ```bash
-    docker-compose -f docker-compose.yml up -d postgres redis
+    cd environment
+    docker-compose up -d
     ```
 
 2.  **Build and run the service:**
     ```bash
-    docker-compose up --build
+    ./mvnw spring-boot:run
     ```
 
 ### API Documentation
