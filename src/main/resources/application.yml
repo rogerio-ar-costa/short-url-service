@@ -42,4 +42,4 @@ logging:
   level:
     io.rac.shortener: INFO
     org.springframework.web: INFO
-    org.flywaydb: DEBUG
+    org.flywaydb: INFO
