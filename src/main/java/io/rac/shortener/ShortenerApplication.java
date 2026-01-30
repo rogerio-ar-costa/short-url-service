@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class ShortenerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ShortenerApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(ShortenerApplication.class, args);
+  }
 
 }

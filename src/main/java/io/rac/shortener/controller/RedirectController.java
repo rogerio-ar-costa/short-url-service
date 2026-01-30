@@ -13,15 +13,21 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Redirect", description = "Endpoint for redirection")
+@Tag(
+    name = "Redirect",
+    description = "Endpoint for redirection"
+)
 public class RedirectController {
 
-    private final UrlShortenerService service;
+  private final UrlShortenerService service;
 
-    @GetMapping("/{shortCode}")
-    @Operation(summary = "Redirect to original URL", description = "Redirects the user to the original URL")
-    public void redirect(@PathVariable String shortCode, HttpServletResponse response) throws IOException {
-        String originalUrl = service.getOriginalUrl(shortCode);
-        response.sendRedirect(originalUrl);
-    }
+  @Operation(
+      summary = "Redirect to original URL",
+      description = "Redirects the user to the original URL"
+  )
+  @GetMapping("/{shortCode}")
+  public void redirect(@PathVariable String shortCode, HttpServletResponse response) throws IOException {
+    String originalUrl = service.getOriginalUrl(shortCode);
+    response.sendRedirect(originalUrl);
+  }
 }

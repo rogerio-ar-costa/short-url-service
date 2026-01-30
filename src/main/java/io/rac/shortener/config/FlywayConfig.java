@@ -13,15 +13,15 @@ import javax.sql.DataSource;
 @Configuration
 public class FlywayConfig {
 
-    @Bean(initMethod = "migrate")
-    public Flyway flyway(DataSource dataSource) {
-        return Flyway.configure()
-                .dataSource(dataSource)
-                .locations("classpath:db/migration")
-                .baselineOnMigrate(true)
-                .validateOnMigrate(true)
-                .failOnMissingLocations(true)
-                .outOfOrder(true)
-                .load();
-    }
+  @Bean(initMethod = "migrate")
+  public Flyway flyway(DataSource dataSource) {
+    return Flyway.configure()
+        .dataSource(dataSource)
+        .locations("classpath:db/migration")
+        .baselineOnMigrate(true)
+        .validateOnMigrate(true)
+        .failOnMissingLocations(true)
+        .outOfOrder(true)
+        .load();
+  }
 }

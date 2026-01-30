@@ -9,7 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
-    Optional<ShortUrl> findByShortCode(String shortCode);
 
-    void deleteByExpiresAtBefore(LocalDateTime currentDateTime);
+  Optional<ShortUrl> findByShortCode(String shortCode);
+
+  void deleteByExpiresAtBefore(LocalDateTime currentDateTime);
+
 }
