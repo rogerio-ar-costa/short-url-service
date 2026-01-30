@@ -21,7 +21,6 @@ public class SecurityConfig {
                                 "/{shortCode}",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/api-docs/**",
                                 "/actuator/**")
                         .permitAll()
                         .anyRequest()
