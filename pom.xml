@@ -27,14 +27,15 @@
         <url/>
     </scm>
     <properties>
-        <java.version>21</java.version>
-        <springdoc.version>2.3.0</springdoc.version>
+        <java.version>25</java.version>
+        <springdoc.version>3.0.1</springdoc.version>
         <sentry.version>7.3.0</sentry.version>
         <shedlock.version>5.10.0</shedlock.version>
-        <spock.version>2.4-M4-groovy-4.0</spock.version>
-        <groovy.version>4.0.24</groovy.version>
-        <testcontainers.version>1.19.3</testcontainers.version>
+        <spock.version>2.4-groovy-5.0</spock.version>
+        <groovy.version>5.0.4</groovy.version>
+        <testcontainers.version>2.0.3</testcontainers.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -110,6 +111,18 @@
         </dependency>
 
         <!-- Test Dependencies -->
+        <!-- The required test dependencies are also modularized -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-restclient-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -137,15 +150,16 @@
             <artifactId>spring-boot-testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>spock</artifactId>
+            <artifactId>testcontainers-spock</artifactId>
             <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
             <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
@@ -180,7 +194,7 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>4.1.1</version>
+                <version>4.3.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -189,6 +203,10 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <parameters>true</parameters>
+                    <targetBytecode>${java.version}</targetBytecode>
+                </configuration>
             </plugin>
         </plugins>
     </build>
