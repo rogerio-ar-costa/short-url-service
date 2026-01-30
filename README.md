@@ -32,7 +32,7 @@ A simple URL shortener service that allows users to shorten long URLs and retrie
 
 - Docker
 - Docker Compose
-- Java 25 (Required for Virtual Threads/Project Loom)
+- Java 21 (Required for Virtual Threads/Project Loom)
 
 ### Running the application
 
