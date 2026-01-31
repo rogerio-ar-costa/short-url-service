@@ -1,11 +1,14 @@
 # Short URL Service
 
-A simple yet powerful URL shortener service that allows users to shorten long URLs and retrieve the original URLs using the shortened version.
+A simple service that allows users to shorten long URLs and retrieve the original URLs using the shortened version.
 
 ## Flow / Use Cases
 
-1.  **Shorten URL**: A user sends a long URL (e.g., `https://www.google.com`) to the service. The service generates a unique short code (e.g., `aBc123`) and stores the mapping.
-2.  **Redirect**: A user accesses the short URL (e.g., `http://localhost:8080/aBc123`). The service looks up the original URL and performs a 302 redirect to it.
+1.  **Shorten URL**: A user sends a long URL (e.g., `https://www.google.com`) to the service.
+The service generates a unique short code (e.g., `aBc123`) and stores the mapping.
+ 
+2. **Redirect**: A user accesses the short URL (e.g., `http://localhost:8080/aBc123`).
+The service looks up the original URL and performs a 302 redirect to it.
 
 ## Tech Stack
 

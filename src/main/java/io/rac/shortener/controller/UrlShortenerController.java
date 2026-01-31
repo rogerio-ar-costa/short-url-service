@@ -43,7 +43,7 @@ public class UrlShortenerController {
     })
     public ResponseEntity<ShortenUrlResponse> shortenUrl(@Valid @RequestBody ShortenUrlRequest request) {
         var shortCode = service.shortenUrl(request.getOriginalUrl());
-        var uri = URI.create("/" + shortCode);
+        var uri = URI.create("/r/" + shortCode);
         var response = ShortenUrlResponse.builder()
                 .shortCode(shortCode)
                 .originalUrl(request.getOriginalUrl())

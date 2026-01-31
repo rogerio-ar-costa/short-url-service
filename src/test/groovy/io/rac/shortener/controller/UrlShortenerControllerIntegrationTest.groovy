@@ -40,7 +40,7 @@ class UrlShortenerControllerIntegrationTest extends AbstractIntegrationTestSpeci
                 request,
                 ShortenUrlResponse.class
         )
-        
+
         then:
         def response = thrown(HttpClientErrorException.BadRequest)
         response.statusCode == HttpStatus.BAD_REQUEST

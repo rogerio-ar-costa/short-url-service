@@ -18,7 +18,7 @@ import java.net.URI;
         description = "Endpoint for redirection"
 )
 @RestController
-@RequestMapping("/redirect-me")
+@RequestMapping("/r")
 @RequiredArgsConstructor
 public class RedirectController {
 

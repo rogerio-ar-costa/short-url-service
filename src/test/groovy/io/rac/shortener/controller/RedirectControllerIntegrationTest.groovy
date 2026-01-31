@@ -27,7 +27,7 @@ class RedirectControllerIntegrationTest extends AbstractIntegrationTestSpecifica
         def noRedirectRestTemplate = new RestTemplate(requestFactory)
 
         when:
-        def response = noRedirectRestTemplate.getForEntity(getBaseUrl() + "/redirect-me/" + shortCode, Void.class)
+        def response = noRedirectRestTemplate.getForEntity(getBaseUrl() + "/r/" + shortCode, Void.class)
 
         then:
         response.statusCode == HttpStatus.FOUND
