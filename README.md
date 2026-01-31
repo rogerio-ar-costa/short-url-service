@@ -7,7 +7,7 @@ A simple service that allows users to shorten long URLs and retrieve the origina
 1.  **Shorten URL**: A user sends a long URL (e.g., `https://www.google.com`) to the service.
 The service generates a unique short code (e.g., `aBc123`) and stores the mapping.
  
-2. **Redirect**: A user accesses the short URL (e.g., `http://localhost:8080/aBc123`).
+2. **Redirect**: A user accesses the short URL (e.g., `http://localhost:8080/r/aBc123`).
 The service looks up the original URL and performs a 302 redirect to it.
 
 ## Tech Stack
@@ -70,36 +70,3 @@ The project includes Swagger UI for interactive API documentation and testing.
 
 Once the application is running, access Swagger UI at:
 [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-
-### Curl Examples
-
-Here is how you can test the API manually using `curl`.
-
-#### 1. Shorten a URL
-
-Send a POST request with the raw URL string in the body.
-
-```bash
-curl -X POST \
-  http://localhost:8080/api/v1/urls \
-  -H 'Content-Type: text/plain' \
-  -d 'https://www.example.com/some/very/long/url/that/needs/shortening'
-```
-
-**Response:**
-`aX9zB2` (Example short code)
-
-#### 2. Access/Redirect
-
-Access the short code to be redirected to the original URL.
-
-```bash
-curl -v http://localhost:8080/aX9zB2
-```
-
-**Response Headers:**
-```
-< HTTP/1.1 302 Found
-< Location: https://www.example.com/some/very/long/url/that/needs/shortening
-...
-```

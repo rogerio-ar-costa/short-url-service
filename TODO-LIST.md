@@ -26,4 +26,4 @@
 - [ ] Add gitflow instructions and/or jenkins
 
 ## Known Issues
-- [ ] Swagger UI might need configuration adjustments if behind a proxy or specific context path.
+- [ ] Sentry cronjobs watch is not working
