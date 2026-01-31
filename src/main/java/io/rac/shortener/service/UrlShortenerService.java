@@ -6,9 +6,12 @@ import io.rac.shortener.repository.ShortUrlRepository;
 import io.rac.shortener.util.ShortCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -16,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UrlShortenerService {
 
     private final ShortUrlRepository repository;
+
+    @Value("${app.shortener.default-expiration-days:30}")
+    private int defaultExpirationDays;
 
     @Cacheable(value = "urls", key = "#shortCode")
     public String getOriginalUrl(String shortCode) {
@@ -49,9 +55,11 @@ public class UrlShortenerService {
     }
 
     private String saveAndReturn(String originalUrl, String shortCode) {
+        var expirationDate = LocalDateTime.now().plusDays(defaultExpirationDays);
         ShortUrl shortUrl = ShortUrl.builder()
                 .originalUrl(originalUrl)
                 .shortCode(shortCode)
+                .expiresAt(expirationDate)
                 .build();
         repository.save(shortUrl);
         log.info("Shortened URL: {} -> {}", originalUrl, shortCode);
