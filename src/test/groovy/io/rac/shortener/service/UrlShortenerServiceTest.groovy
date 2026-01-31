@@ -6,6 +6,8 @@ import io.rac.shortener.repository.ShortUrlRepository
 import spock.lang.Specification
 import spock.lang.Subject
 
+import java.util.Optional
+
 class UrlShortenerServiceTest extends Specification {
 
     ShortUrlRepository repository = Mock()
@@ -48,6 +50,7 @@ class UrlShortenerServiceTest extends Specification {
         def shortCode = service.shortenUrl(originalUrl)
 
         then:
+        // First call returns existing, second call returns empty (success)
         2 * repository.findByShortCode(_) >>> [Optional.of(existingShortUrl), Optional.empty()]
         1 * repository.save(_)
         shortCode != null

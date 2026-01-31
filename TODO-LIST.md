@@ -26,5 +26,4 @@
 - [ ] Add gitflow instructions and/or jenkins
 
 ## Known Issues
-
-- [ ] Swagger UI is currently broken
+- [ ] Swagger UI might need configuration adjustments if behind a proxy or specific context path.

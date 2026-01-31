@@ -59,11 +59,20 @@ To run all tests (Unit and Integration):
 ./mvnw test
 ```
 
-## Curl Examples
+## API Documentation & Manual Testing
+
+### Swagger UI
+
+The project includes Swagger UI for interactive API documentation and testing.
+
+Once the application is running, access Swagger UI at:
+[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+### Curl Examples
 
 Here is how you can test the API manually using `curl`.
 
-### 1. Shorten a URL
+#### 1. Shorten a URL
 
 Send a POST request with the raw URL string in the body.
 
@@ -77,7 +86,7 @@ curl -X POST \
 **Response:**
 `aX9zB2` (Example short code)
 
-### 2. Access/Redirect
+#### 2. Access/Redirect
 
 Access the short code to be redirected to the original URL.
 

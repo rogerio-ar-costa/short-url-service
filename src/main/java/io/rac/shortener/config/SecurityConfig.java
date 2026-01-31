@@ -18,7 +18,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/v1/urls/**",
-                                "/{shortCode}",
+                                "/redirect-me/{shortCode}",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/actuator/**")

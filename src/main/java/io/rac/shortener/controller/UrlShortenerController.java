@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
+@Tag(
+        name = "URL Shortener",
+        description = "Endpoints for shortening and retrieving URLs"
+)
 @RestController
 @RequestMapping("/api/v1/urls")
 @RequiredArgsConstructor
-@Tag(name = "URL Shortener", description = "Endpoints for shortening and retrieving URLs")
 public class UrlShortenerController {
 
     private final UrlShortenerService service;
