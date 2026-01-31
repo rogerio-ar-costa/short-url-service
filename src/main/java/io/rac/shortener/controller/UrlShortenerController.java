@@ -1,8 +1,16 @@
 package io.rac.shortener.controller;
 
+import io.rac.shortener.dto.ErrorResponse;
+import io.rac.shortener.dto.ShortenUrlRequest;
+import io.rac.shortener.dto.ShortenUrlResponse;
 import io.rac.shortener.service.UrlShortenerService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,16 +35,36 @@ public class UrlShortenerController {
 
     @PostMapping
     @Operation(summary = "Shorten a URL", description = "Accepts a long URL and returns a shortened code")
-    public ResponseEntity<String> shortenUrl(@RequestBody String originalUrl) {
-        var shortCode = service.shortenUrl(originalUrl);
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "URL successfully shortened",
+                    content = @Content(schema = @Schema(implementation = ShortenUrlResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid URL format",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    public ResponseEntity<ShortenUrlResponse> shortenUrl(@Valid @RequestBody ShortenUrlRequest request) {
+        var shortCode = service.shortenUrl(request.getOriginalUrl());
         var uri = URI.create("/" + shortCode);
-        return ResponseEntity.created(uri).body(shortCode);
+        var response = ShortenUrlResponse.builder()
+                .shortCode(shortCode)
+                .originalUrl(request.getOriginalUrl())
+                .build();
+        return ResponseEntity.created(uri).body(response);
     }
 
     @GetMapping("/{shortCode}")
     @Operation(summary = "Get original URL", description = "Returns the original URL for a given short code")
-    public ResponseEntity<String> getOriginalUrl(@PathVariable String shortCode) {
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "URL found",
+                    content = @Content(schema = @Schema(implementation = ShortenUrlResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Short code not found",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    public ResponseEntity<ShortenUrlResponse> getOriginalUrl(@PathVariable String shortCode) {
         var originalUrl = service.getOriginalUrl(shortCode);
-        return ResponseEntity.ok(originalUrl);
+        var response = ShortenUrlResponse.builder()
+                .shortCode(shortCode)
+                .originalUrl(originalUrl)
+                .build();
+        return ResponseEntity.ok(response);
     }
 }
