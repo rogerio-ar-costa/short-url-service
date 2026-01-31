@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
 
-class UrlShortenerControllerIntegrationTest extends AbstractIntegrationTestSpecification {
+class cleUrlShortenerControllerIntegrationTest extends AbstractIntegrationTestSpecification {
 
     def "create short url: happy path -> created"() {
         given:

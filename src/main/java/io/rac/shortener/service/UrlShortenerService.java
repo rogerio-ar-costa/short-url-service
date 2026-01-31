@@ -15,35 +15,46 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UrlShortenerService {
 
-  private final ShortUrlRepository repository;
+    private final ShortUrlRepository repository;
 
-  @Transactional
-  public String shortenUrl(String originalUrl) {
-    String shortCode = ShortCodeGenerator.generateShortCode();
-    // Ensure uniqueness (simple retry mechanism, could be improved)
-    while (repository.findByShortCode(shortCode).isPresent()) {
-      shortCode = ShortCodeGenerator.generateShortCode();
+    @Cacheable(value = "urls", key = "#shortCode")
+    public String getOriginalUrl(String shortCode) {
+
+        log.debug("Fetching original URL for code: {}", shortCode);
+
+        var shortUrl = repository.findByShortCode(shortCode);
+        return shortUrl
+                .map(ShortUrl::getOriginalUrl)
+                .orElseThrow(() ->
+                        new UrlNotFoundException("URL not found for code: " + shortCode)
+                );
     }
 
-    ShortUrl shortUrl = ShortUrl.builder()
-        .originalUrl(originalUrl)
-        .shortCode(shortCode)
-        .build();
+    @Transactional
+    public String shortenUrl(String originalUrl) {
 
-    repository.save(shortUrl);
-    log.info("Shortened URL: {} -> {}", originalUrl, shortCode);
-    return shortCode;
-  }
+        log.debug("Shortening URL: {}", originalUrl);
 
-  @Cacheable(value = "urls", key = "#shortCode")
-  public String getOriginalUrl(String shortCode) {
-    log.debug("Fetching original URL for code: {}", shortCode);
+        String shortCode = calculateUniqueShortCode(originalUrl);
+        return saveAndReturn(originalUrl, shortCode);
+    }
 
-    var shortUrl = repository.findByShortCode(shortCode);
-    return shortUrl
-        .map(ShortUrl::getOriginalUrl)
-        .orElseThrow(() ->
-            new UrlNotFoundException("URL not found for code: " + shortCode)
-        );
-  }
+
+    private String calculateUniqueShortCode(String originalUrl) {
+        String shortCode = ShortCodeGenerator.generateShortCode();
+        while (repository.findByShortCode(shortCode).isPresent()) {
+            shortCode = ShortCodeGenerator.generateShortCode();
+        }
+        return shortCode;
+    }
+
+    private String saveAndReturn(String originalUrl, String shortCode) {
+        ShortUrl shortUrl = ShortUrl.builder()
+                .originalUrl(originalUrl)
+                .shortCode(shortCode)
+                .build();
+        repository.save(shortUrl);
+        log.info("Shortened URL: {} -> {}", originalUrl, shortCode);
+        return shortCode;
+    }
 }

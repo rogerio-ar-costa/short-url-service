@@ -49,7 +49,9 @@ This project uses a modern Java stack focusing on performance and developer expe
 
 ## Testing
 
-The project uses Spock for testing. Integration tests use Testcontainers to spin up ephemeral Postgres and Redis instances.
+The project uses Spock for testing. 
+
+Integration tests use Testcontainers to spin up ephemeral Postgres and Redis instances.
 
 To run all tests (Unit and Integration):
 
